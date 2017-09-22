@@ -1,7 +1,7 @@
 #公有仓库
 source 'https://github.com/CocoaPods/Specs.git'
 #私有仓库
-source 'https://git.thy360.com/ios-compose/ios_specs.git'
+
 platform :ios, '8.0'
 target 'Note' do
 pod 'AFNetworking'
