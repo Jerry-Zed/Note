@@ -6,18 +6,30 @@
 //  Copyright © 2017年 HS. All rights reserved.
 //
 
-#import "HttpTool.h"
+#import "HttpRequestTool.h"
+#import "HTTPCredential.h"
 
-@implementation HttpTool
+@implementation HttpRequestTool
+
++ (AFURLSessionManager*)manager {
+    static AFURLSessionManager *manager = nil;
+    dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        manager = [[AFURLSessionManager alloc]initWithSessionConfiguration:configuration];
+        manager.securityPolicy = [self securityPolicy];
+        manager.responseSerializer = [self response];
+        [manager setTaskDidReceiveAuthenticationChallengeBlock:^NSURLSessionAuthChallengeDisposition(NSURLSession * _Nonnull session, NSURLSessionTask * _Nonnull task, NSURLAuthenticationChallenge * _Nonnull challenge, NSURLCredential *__autoreleasing  _Nullable * _Nullable credential) {
+            *credential = [HTTPCredential getAuthenticationFromP12:@"" pwd:@""];
+            return NSURLSessionAuthChallengeUseCredential;
+        }];
+    });
+    return manager;
+}
+
 + (void)requestWith:(NSString*)method url:(NSString*)urlString complete:(void(^)(NSDictionary*))complete {
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc]initWithSessionConfiguration:configuration];
-    
+    AFURLSessionManager *manager= [self manager];
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer]requestWithMethod:method URLString:urlString parameters:nil error:nil];
-    AFHTTPResponseSerializer *response = [AFHTTPResponseSerializer serializer];
-    response.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
-    
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
         complete(dict);
@@ -39,13 +51,19 @@
     return request;
 }
 
-+ (AFSecurityPolicy*)sucurityPolicy {
++ (AFSecurityPolicy*)securityPolicy {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"" ofType:@"cer"];
     NSData *cerData = [NSData dataWithContentsOfFile:path];
     NSSet *certSet = [NSSet setWithObjects:cerData, nil];
     AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate withPinnedCertificates:certSet];
-//    securityPolicy.validatesDomainName
+    securityPolicy.validatesDomainName = NO;
+    securityPolicy.allowInvalidCertificates = YES;
     return securityPolicy;
-    
+}
+
++ (AFHTTPResponseSerializer*)response {
+    AFHTTPResponseSerializer *response = [AFHTTPResponseSerializer serializer];
+    response.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
+    return response;
 }
 @end

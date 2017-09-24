@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		220453E11F74E9F600E55697 /* HttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 220453E01F74E9F600E55697 /* HttpTool.m */; };
+		220453E11F74E9F600E55697 /* HttpRequestTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 220453E01F74E9F600E55697 /* HttpRequestTool.m */; };
 		220453E41F74F6F200E55697 /* HTTPCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 220453E31F74F6F200E55697 /* HTTPCredential.m */; };
 		87528CE9660D505B1C5227A9 /* libPods-Note.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B365AA51E02B7C6A24C943 /* libPods-Note.a */; };
+		95ABE82A1F77B3AA00CEF643 /* HttpUploadTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 95ABE8291F77B3AA00CEF643 /* HttpUploadTool.m */; };
+		95ABE82D1F77B77200CEF643 /* HttpDownloadTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 95ABE82C1F77B77200CEF643 /* HttpDownloadTool.m */; };
 		95EA65431F729CAA00212D97 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA65421F729CAA00212D97 /* AppDelegate.m */; };
 		95EA65461F729CAA00212D97 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA65451F729CAA00212D97 /* ViewController.m */; };
 		95EA654B1F729CAA00212D97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95EA654A1F729CAA00212D97 /* Assets.xcassets */; };
@@ -32,10 +34,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		220453DF1F74E9F600E55697 /* HttpTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpTool.h; sourceTree = "<group>"; };
-		220453E01F74E9F600E55697 /* HttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpTool.m; sourceTree = "<group>"; };
+		220453DF1F74E9F600E55697 /* HttpRequestTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestTool.h; sourceTree = "<group>"; };
+		220453E01F74E9F600E55697 /* HttpRequestTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequestTool.m; sourceTree = "<group>"; };
 		220453E21F74F6F200E55697 /* HTTPCredential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPCredential.h; sourceTree = "<group>"; };
 		220453E31F74F6F200E55697 /* HTTPCredential.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPCredential.m; sourceTree = "<group>"; };
+		95ABE8281F77B3AA00CEF643 /* HttpUploadTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpUploadTool.h; sourceTree = "<group>"; };
+		95ABE8291F77B3AA00CEF643 /* HttpUploadTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HttpUploadTool.m; sourceTree = "<group>"; };
+		95ABE82B1F77B77200CEF643 /* HttpDownloadTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpDownloadTool.h; sourceTree = "<group>"; };
+		95ABE82C1F77B77200CEF643 /* HttpDownloadTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HttpDownloadTool.m; sourceTree = "<group>"; };
 		95EA653E1F729CAA00212D97 /* Note.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Note.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95EA65411F729CAA00212D97 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		95EA65421F729CAA00212D97 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -91,10 +97,14 @@
 		220453DE1F74E90A00E55697 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
-				220453DF1F74E9F600E55697 /* HttpTool.h */,
-				220453E01F74E9F600E55697 /* HttpTool.m */,
+				220453DF1F74E9F600E55697 /* HttpRequestTool.h */,
+				220453E01F74E9F600E55697 /* HttpRequestTool.m */,
 				220453E21F74F6F200E55697 /* HTTPCredential.h */,
 				220453E31F74F6F200E55697 /* HTTPCredential.m */,
+				95ABE8281F77B3AA00CEF643 /* HttpUploadTool.h */,
+				95ABE8291F77B3AA00CEF643 /* HttpUploadTool.m */,
+				95ABE82B1F77B77200CEF643 /* HttpDownloadTool.h */,
+				95ABE82C1F77B77200CEF643 /* HttpDownloadTool.m */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -345,12 +355,14 @@
 				95EA65461F729CAA00212D97 /* ViewController.m in Sources */,
 				95EA65791F72AAE000212D97 /* NTSideBarViewController.m in Sources */,
 				95EA65721F72A03500212D97 /* BaseController.m in Sources */,
+				95ABE82D1F77B77200CEF643 /* HttpDownloadTool.m in Sources */,
 				95EA656F1F72A01600212D97 /* commonDefine.m in Sources */,
 				95EA65761F72A08B00212D97 /* NtHomeViewController.m in Sources */,
 				220453E41F74F6F200E55697 /* HTTPCredential.m in Sources */,
 				95EA65511F729CAA00212D97 /* main.m in Sources */,
 				95EA65431F729CAA00212D97 /* AppDelegate.m in Sources */,
-				220453E11F74E9F600E55697 /* HttpTool.m in Sources */,
+				95ABE82A1F77B3AA00CEF643 /* HttpUploadTool.m in Sources */,
+				220453E11F74E9F600E55697 /* HttpRequestTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
