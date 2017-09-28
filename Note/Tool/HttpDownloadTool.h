@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "NTDownloadTask.h"
 @interface HttpDownloadTool : NSObject
-
++ (void)removeAll;
++ (void)resumeAll;
++ (void)suspendAll;
++ (NTDownloadTask*)download:(NSString*)urlString;
 @end

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "commonDefine.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -20,6 +21,8 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc]initWithFrame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     [self.window makeKeyWindow];
+    self.window.rootViewController = [ViewController new];
+    
     return YES;
 }
 
