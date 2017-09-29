@@ -7,7 +7,21 @@
 //
 
 #import "NTDownloadTask.h"
+#import "HttpDownloadTool.h"
+#import "NSString+MD5.h"
 
+#define IndexDic [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:@"download.plist"]
+
+#define DownloadDir [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:@"download"]
+
+
+//#define DownloadPath [DownloadDir stringByAppendingPathComponent:[self.task.currentRequest.URL.absoluteString md5]]
+
+#define FileInfo [[[NSDictionary alloc]initWithContentsOfFile:IndexDic] objectForKey:[self.task.currentRequest.URL.absoluteString md5]]
+
+@interface NTDownloadTask ()
+
+@end
 @implementation NTDownloadTask
 
 - (instancetype)init
@@ -38,27 +52,22 @@
 }
 
 - (NSString*)filePath {
-    NSString *dir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-    NSString *plistPath = [dir stringByAppendingPathComponent:@"download.plist"];
-    NSString *downDir = [dir stringByAppendingPathComponent:@"download"];
-    NSFileManager *manager = [NSFileManager defaultManager];
-    if (![manager fileExistsAtPath:plistPath]) {
-        [manager createFileAtPath:plistPath contents:nil attributes:nil];
+    if (DownloadDir) {
+        [[NSFileManager defaultManager]createDirectoryAtPath:DownloadDir withIntermediateDirectories:YES attributes:nil error:nil];
     }
-    if (![manager fileExistsAtPath:downDir]) {
-        [manager createDirectoryAtPath:downDir withIntermediateDirectories:YES attributes:nil error:nil];
+    NSDictionary *dic  = [[NSDictionary alloc]initWithContentsOfFile:IndexDic];
+    if (dic) {
+        NSString *downloadFilePath = [FileInfo objectForKey:@"path"];
+        return downloadFilePath;
+    } else {
+        NSDictionary *fileInfo = @{[self.task.currentRequest.URL.absoluteString md5]:};
+        [fileInfo writeToFile:IndexDic atomically:YES];
     }
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithContentsOfFile:plistPath];
-    NSDictionary *fileInfo = [dic objectForKey:self.task.currentRequest.URL.absoluteString];
-    if (!fileInfo) {
-        
-    }
-    NSString *filePath = [fileInfo objectForKey:@"path"];
-    if (![[NSFileManager defaultManager]fileExistsAtPath:filePath]) {
-        [[NSFileManager defaultManager]createFileAtPath:filePath contents:nil attributes:nil];
-    }
-    return filePath;
+    
+    return nil;
 }
+
+
 
 - (NSOutputStream*)outputStream {
     if (_outputStream) {
@@ -66,6 +75,11 @@
     }
     return _outputStream;
 }
+
+- (NSURLSession*)session {
+    return nil;
+}
+
 - (NSUInteger)downloadLength {
     if (self.task.state == NSURLSessionTaskStateCanceling) {
         NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingString:@""];

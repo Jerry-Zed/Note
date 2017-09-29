@@ -21,7 +21,10 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc]initWithFrame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     [self.window makeKeyWindow];
-    self.window.rootViewController = [ViewController new];
+    [self.window makeKeyAndVisible];
+    ViewController *vc = [[ViewController alloc]init];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:vc];
+    self.window.rootViewController = nav;
     
     return YES;
 }

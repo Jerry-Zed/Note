@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "NTDownloadTask.h"
-@interface NTSessionDownloadTaskDelegate : NSObject
+@interface NTSessionDownloadTaskDelegate : NSObject <NSURLSessionDelegate,NSURLSessionDataDelegate,NSURLSessionTaskDelegate>
 @property (nonatomic, copy) void(^completeHandle)(NSString*);
 @property (nonatomic, strong) NSMutableArray<NTDownloadTask*> *taskModelList;
 @end

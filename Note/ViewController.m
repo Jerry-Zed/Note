@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    NSString *url = @"http://cdn2.ime.sogou.com/a21a4c9d702afb52e6722da3b2566045/595cd0a0/dl/index/1499146667/sogou_mac_42b.dmg";
+    NSString *url = @"http://sw.bos.baidu.com/sw-search-sp/software/654897a806dc0/FileZilla_3.17.0.1_macosx-x86.zip";
     NTDownloadTask *task = [HttpDownloadTool download:url];
     task.downloadProgress = ^(float progress) {
         NSLog(@"%f",progress);

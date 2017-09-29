@@ -7,11 +7,13 @@
 //
 
 #import "HttpDownloadTool.h"
+#import "NTSessionDownloadTaskDelegate.h"
 
 
 @interface HttpDownloadTool () <NSURLSessionDelegate>
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSMutableArray<NTDownloadTask*> *taskModelList;
+@property (nonatomic, strong) NTSessionDownloadTaskDelegate *delegate;
 @end
 
 @implementation HttpDownloadTool
@@ -22,21 +24,23 @@
     dispatch_once(&onceToken, ^{
         manager = [HttpDownloadTool new];
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-        manager.session = [NSURLSession sessionWithConfiguration:config delegate:nil delegateQueue:nil];
+        manager.delegate = [NTSessionDownloadTaskDelegate new];
+        manager.delegate.taskModelList = manager.taskModelList;
+        manager.session = [NSURLSession sessionWithConfiguration:config delegate:manager.delegate delegateQueue:[[NSOperationQueue alloc] init]];
         manager.taskModelList = [NSMutableArray arrayWithCapacity:0];
     });
     return manager;
 }
 
+
 + (NTDownloadTask*)download:(NSString*)urlString{
     NSURLSession *session = [self manager].session;
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-    }];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request];
     [task resume];
     NTDownloadTask *model = [NTDownloadTask new];
     model.task = task;
+    model.session = [self manager].session;
     model.downloadProgress = ^(float progress) {
         NSLog(@"%f",progress);
     };
@@ -44,26 +48,5 @@
     return model;
 }
 
-+ (void)removeAll {
-    for (int i = 0; i < [self manager].taskModelList.count;) {
-        NTDownloadTask *model = [self manager].taskModelList[i];
-        [model cancel];
-        [[self manager].taskModelList removeObjectAtIndex:i];
-    }
-}
-
-+ (void)resumeAll {
-    for (int i = 0; i < [self manager].taskModelList.count;i++) {
-        NTDownloadTask *model = [self manager].taskModelList[i];
-        [model resume];
-    }
-}
-
-+ (void)suspendAll {
-    for (int i = 0; i < [self manager].taskModelList.count;) {
-        NTDownloadTask *model = [self manager].taskModelList[i];
-        [model suspend];
-    }
-}
 
 @end

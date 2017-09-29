@@ -7,7 +7,7 @@
 //
 
 #import "NTSessionDownloadTaskDelegate.h"
-@interface NTSessionDownloadTaskDelegate () <NSURLSessionDataDelegate,NSURLSessionTaskDelegate>
+@interface NTSessionDownloadTaskDelegate ()
 
 @end
 @implementation NTSessionDownloadTaskDelegate
