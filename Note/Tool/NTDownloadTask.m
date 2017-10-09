@@ -21,7 +21,6 @@
 
 - (void)setModel:(NTDownloadFileModel *)model {
     _model = model;
-//    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:[NSString stringWithFormat:@"download/%@",model.path]];
     if (![[NSFileManager defaultManager] fileExistsAtPath:Path]) {
         [[NSFileManager defaultManager] createFileAtPath:Path contents:nil attributes:@{NSFileType:model.type}];
     }

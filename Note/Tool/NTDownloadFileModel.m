@@ -41,6 +41,7 @@
     NSMutableArray *downloadList = [NTDownloadFileModel readList];
     for (NTDownloadFileModel *model in downloadList) {
         if ([model.url isEqualToString:url.absoluteString]) {
+            [model setupCurrentLength];
             return model;
         }
     }
@@ -57,6 +58,8 @@
     if (isExist) {
         NSInteger fileSize = [[[[NSFileManager defaultManager] attributesOfItemAtPath:self.path error:nil] objectForKey:NSFileSize] integerValue];
         self.currentLength = fileSize;
+    } else {
+        self.currentLength = 0;
     }
 }
 
