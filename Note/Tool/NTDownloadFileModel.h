@@ -8,9 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NTDownloadFileModel : NSObject
+@interface NTDownloadFileModel : NSObject <NSCoding>
 @property (nonatomic, copy) NSString *path;
+@property (nonatomic, assign) NSInteger currentLength;
 @property (nonatomic, assign) NSInteger totalLength;
 @property (nonatomic, copy) NSString *type;
 @property (nonatomic, copy) NSString *url;
+
++ (instancetype)instanceWith:(NSURL*)url;
+
+- (void)save;                // 保存信息到下载列表
++ (NSMutableArray*)readList;       // 下载列表
+
 @end

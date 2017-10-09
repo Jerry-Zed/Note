@@ -7,17 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NTDownloadFileModel.h"
 
 @interface NTDownloadTask : NSObject;
 
 @property (nonatomic, strong) NSURLSessionDataTask *task;
 @property (nonatomic, retain) NSURLSession *session;
-
 @property (nonatomic, strong) NSOutputStream *outputStream;
-@property (nonatomic, assign) NSUInteger downloadLength;
-@property (nonatomic, assign) NSUInteger totalLength;
+
+@property (nonatomic, strong) NTDownloadFileModel *model;
+
+//@property (nonatomic, assign) NSUInteger downloadLength;
+//@property (nonatomic, assign) NSUInteger totalLength;
 @property (nonatomic, copy) void(^downloadProgress)(float progress);
-- (void)continueDownload;
-- (void)suspend;
-- (void)cancel;
+//- (void)continueDownload;
+//- (void)suspend;
+//- (void)cancel;
 @end

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		220453E11F74E9F600E55697 /* HttpRequestTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 220453E01F74E9F600E55697 /* HttpRequestTool.m */; };
 		220453E41F74F6F200E55697 /* HTTPCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 220453E31F74F6F200E55697 /* HTTPCredential.m */; };
-		226240F41F7CD032000D5BDC /* NTSessionDownloadTaskDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 226240F31F7CD032000D5BDC /* NTSessionDownloadTaskDelegate.m */; };
 		226240F71F7CD405000D5BDC /* NTDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 226240F61F7CD405000D5BDC /* NTDownloadTask.m */; };
 		22F364091F7E4A7E00B9C3C9 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F364081F7E4A7E00B9C3C9 /* NSString+MD5.m */; };
 		22F3640C1F7E4FDB00B9C3C9 /* NTDownloadFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F3640B1F7E4FDB00B9C3C9 /* NTDownloadFileModel.m */; };
@@ -42,8 +41,6 @@
 		220453E01F74E9F600E55697 /* HttpRequestTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequestTool.m; sourceTree = "<group>"; };
 		220453E21F74F6F200E55697 /* HTTPCredential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPCredential.h; sourceTree = "<group>"; };
 		220453E31F74F6F200E55697 /* HTTPCredential.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPCredential.m; sourceTree = "<group>"; };
-		226240F21F7CD032000D5BDC /* NTSessionDownloadTaskDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTSessionDownloadTaskDelegate.h; sourceTree = "<group>"; };
-		226240F31F7CD032000D5BDC /* NTSessionDownloadTaskDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTSessionDownloadTaskDelegate.m; sourceTree = "<group>"; };
 		226240F51F7CD405000D5BDC /* NTDownloadTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTDownloadTask.h; sourceTree = "<group>"; };
 		226240F61F7CD405000D5BDC /* NTDownloadTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTDownloadTask.m; sourceTree = "<group>"; };
 		22F364071F7E4A7E00B9C3C9 /* NSString+MD5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
@@ -118,8 +115,6 @@
 				95ABE8291F77B3AA00CEF643 /* HttpUploadTool.m */,
 				95ABE82B1F77B77200CEF643 /* HttpDownloadTool.h */,
 				95ABE82C1F77B77200CEF643 /* HttpDownloadTool.m */,
-				226240F21F7CD032000D5BDC /* NTSessionDownloadTaskDelegate.h */,
-				226240F31F7CD032000D5BDC /* NTSessionDownloadTaskDelegate.m */,
 				226240F51F7CD405000D5BDC /* NTDownloadTask.h */,
 				226240F61F7CD405000D5BDC /* NTDownloadTask.m */,
 				22F3640A1F7E4FDB00B9C3C9 /* NTDownloadFileModel.h */,
@@ -388,7 +383,6 @@
 				95EA656F1F72A01600212D97 /* commonDefine.m in Sources */,
 				95EA65761F72A08B00212D97 /* NtHomeViewController.m in Sources */,
 				22F364091F7E4A7E00B9C3C9 /* NSString+MD5.m in Sources */,
-				226240F41F7CD032000D5BDC /* NTSessionDownloadTaskDelegate.m in Sources */,
 				220453E41F74F6F200E55697 /* HTTPCredential.m in Sources */,
 				95EA65511F729CAA00212D97 /* main.m in Sources */,
 				95EA65431F729CAA00212D97 /* AppDelegate.m in Sources */,
