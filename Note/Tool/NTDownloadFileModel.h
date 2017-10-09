@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#define DownloadDir [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:@"download"]
+#define DownloadList [DownloadDir stringByAppendingPathComponent:@"index.plist"]
 
 @interface NTDownloadFileModel : NSObject <NSCoding>
 @property (nonatomic, copy) NSString *path;

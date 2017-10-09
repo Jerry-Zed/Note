@@ -8,8 +8,6 @@
 
 #import "NTDownloadFileModel.h"
 #import <objc/runtime.h>
-#define DownloadDir [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:@"download"]
-#define DownloadList [DownloadDir stringByAppendingPathComponent:@"index.plist"]
 
 @implementation NTDownloadFileModel
 - (instancetype)initWithCoder:(NSCoder *)coder

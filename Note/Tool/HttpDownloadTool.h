@@ -12,5 +12,6 @@
 //+ (void)removeAll;
 //+ (void)resumeAll;
 //+ (void)suspendAll;
++ (NSURLSession*)defaulSession;
 + (NTDownloadTask*)download:(NSString*)urlString;
 @end

@@ -31,17 +31,20 @@
     return manager;
 }
 
++ (NSURLSession*)defaulSession{
+    return [self manager].session;
+}
 
 + (NTDownloadTask*)download:(NSString*)urlString{
-    NSURLSession *session = [self manager].session;
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSURLSessionDataTask *sessionTask = [session dataTaskWithRequest:request];
-    [sessionTask resume];
+//    NSURLSession *session = [self manager].session;
+//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+//    NSURLSessionDataTask *sessionTask = [session dataTaskWithRequest:request];
+//    [sessionTask resume];
     NTDownloadTask *task = [NTDownloadTask new];
-    NTDownloadFileModel *model = [NTDownloadFileModel instanceWith:[NSURL URLWithString:urlString]];
-    task.model = model;
-    task.task = sessionTask;
-    task.session = session;
+    
+    [task startWithUrl:urlString];
+//    task.task = sessionTask;
+//    task.session = session;
     task.downloadProgress = ^(float progress) {
         NSLog(@"%f",progress);
     };
@@ -56,16 +59,18 @@
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     NTDownloadTask *tTask= [self seekTaskModel:task];
     if (tTask) {
-        [tTask.outputStream close];
-        tTask.outputStream = nil;
+        [tTask cancel];
         [tTask.model save];
     }
 }
 // sessionDataDelegate
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    __block NTDownloadTask *task = [self seekTaskModel:dataTask];
+    NTDownloadTask *task = [self seekTaskModel:dataTask];
     if (task) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            if (task.outputStream.streamStatus == NSStreamStatusNotOpen) {
+                [task.outputStream open];
+            }
             [task.outputStream write:data.bytes maxLength:data.length];
             task.model.currentLength += data.length;
         });
@@ -81,9 +86,8 @@
 }
 
 - (NTDownloadTask*)seekTaskModel:(NSURLSessionTask*)task {
-    //    NSURLSessionDataTask *dataTask = task;
     for (NTDownloadTask *model in self.taskModelList) {
-        if (model.task.taskIdentifier == task.taskIdentifier) {
+        if (task.taskIdentifier == task.taskIdentifier) {
             return model;
         }
     }

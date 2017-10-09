@@ -10,9 +10,11 @@
 #import "HttpDownloadTool.h"
 #import "NSString+MD5.h"
 
-#define Path [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:[NSString stringWithFormat:@"download/%@",self.model.path]]
+#define Path [DownloadDir stringByAppendingPathComponent:self.model.path]
 @interface NTDownloadTask ()
-
+@property (nonatomic, strong) NSURLSessionDataTask *task;
+@property (nonatomic, copy) NSString *url;
+//@property (nonatomic, retain) NSURLSession *session;
 @end
 @implementation NTDownloadTask
 
@@ -24,15 +26,28 @@
         [[NSFileManager defaultManager] createFileAtPath:Path contents:nil attributes:@{NSFileType:model.type}];
     }
     self.outputStream = [NSOutputStream outputStreamToFileAtPath:Path append:YES];
-    
+    [self.outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     [model addObserver:self forKeyPath:@"currentLength" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
     [model addObserver:self forKeyPath:@"totalLength" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
 }
 
-- (void)cancel {
-    [self.task cancel];
-    [self.outputStream close];
-    self.outputStream = nil;
+- (void)startWithUrl:(NSString*)url {
+    self.url = url;
+    [self cancel];
+    NTDownloadFileModel *model = [NTDownloadFileModel instanceWith:[NSURL URLWithString:url]];
+    self.model = model;
+    self.task = [[HttpDownloadTool defaulSession] dataTaskWithRequest:self.request];
+    [self.task resume];
+    [self setValue:@(self.task.taskIdentifier) forKey:@"taskIdentifier"];
+}
+
+- (void)suspend {
+    [self.task suspend];
+}
+
+- (void)continueDownload {
+    self.task = [[HttpDownloadTool defaulSession] dataTaskWithRequest:self.request];
+    [self.task resume];
 }
 
 
@@ -48,11 +63,18 @@
 //}
 
 
+- (void)cancel {
+    [self.outputStream close];
+    self.outputStream = nil;
+    [self.task cancel];
+    self.task = nil;
+}
+
 
 
 - (NSMutableURLRequest*)request {
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.task.currentRequest.URL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.url]];
     NSString *range = [NSString stringWithFormat:@"bytes=%zd-",  self.model.currentLength];
     [request setValue:range forHTTPHeaderField:@"Range"];
     return request;
@@ -67,7 +89,7 @@
     }
     if ([keyPath isEqualToString:@"totalLength"]) {
         NSInteger totalLength = [change[NSKeyValueChangeNewKey] integerValue];
-        BOOL sucess = [[NSFileManager defaultManager]setAttributes:@{NSFileSize:@(totalLength)} ofItemAtPath:Path error:nil];
+//        BOOL sucess = [[NSFileManager defaultManager]setAttributes:@{NSFileSize:@(totalLength)} ofItemAtPath:Path error:nil];
         if (totalLength && self.downloadProgress) {
             self.downloadProgress(self.model.currentLength * 1.0 / totalLength);
         }
