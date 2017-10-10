@@ -54,9 +54,10 @@
 }
 
 - (void)setupCurrentLength {
-    BOOL isExist = [[NSFileManager defaultManager] fileExistsAtPath:self.path];
+    NSString *path = [DownloadDir stringByAppendingPathComponent:self.path];
+    BOOL isExist = [[NSFileManager defaultManager] fileExistsAtPath:path];
     if (isExist) {
-        NSInteger fileSize = [[[[NSFileManager defaultManager] attributesOfItemAtPath:self.path error:nil] objectForKey:NSFileSize] integerValue];
+        NSInteger fileSize = [[[[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil] objectForKey:NSFileSize] integerValue];
         self.currentLength = fileSize;
     } else {
         self.currentLength = 0;

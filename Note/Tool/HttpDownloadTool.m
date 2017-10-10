@@ -8,13 +8,13 @@
 
 #import "HttpDownloadTool.h"
 #import "NTDownloadFileModel.h"
-//#import "NTSessionDownloadTaskDelegate.h"
+
 
 
 @interface HttpDownloadTool () <NSURLSessionDelegate,NSURLSessionDataDelegate,NSURLSessionTaskDelegate>
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSMutableArray<NTDownloadTask*> *taskModelList;
-//@property (nonatomic, strong) NTSessionDownloadTaskDelegate *delegate;
+
 @end
 
 @implementation HttpDownloadTool
@@ -36,18 +36,9 @@
 }
 
 + (NTDownloadTask*)download:(NSString*)urlString{
-//    NSURLSession *session = [self manager].session;
-//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-//    NSURLSessionDataTask *sessionTask = [session dataTaskWithRequest:request];
-//    [sessionTask resume];
     NTDownloadTask *task = [NTDownloadTask new];
     
     [task startWithUrl:urlString];
-//    task.task = sessionTask;
-//    task.session = session;
-    task.downloadProgress = ^(float progress) {
-        NSLog(@"%f",progress);
-    };
     
     [[self manager].taskModelList addObject:task];
     return task;
@@ -59,7 +50,7 @@
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     NTDownloadTask *tTask= [self seekTaskModel:task];
     if (tTask) {
-        [tTask cancel];
+//        [tTask cancel];
         [tTask.model save];
     }
 }
@@ -69,10 +60,11 @@
     if (task) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             if (task.outputStream.streamStatus == NSStreamStatusNotOpen) {
+                [task.outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
                 [task.outputStream open];
             }
-            [task.outputStream write:data.bytes maxLength:data.length];
-            task.model.currentLength += data.length;
+//            NSLog(@"%ld",[task.outputStream write:data.bytes maxLength:data.length]);
+            task.model.currentLength += [task.outputStream write:data.bytes maxLength:data.length];
         });
     }
 }

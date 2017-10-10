@@ -11,7 +11,7 @@
 #import "NSString+MD5.h"
 
 #define Path [DownloadDir stringByAppendingPathComponent:self.model.path]
-@interface NTDownloadTask ()
+@interface NTDownloadTask () <NSStreamDelegate>
 @property (nonatomic, strong) NSURLSessionDataTask *task;
 @property (nonatomic, copy) NSString *url;
 //@property (nonatomic, retain) NSURLSession *session;
@@ -25,7 +25,7 @@
         [[NSFileManager defaultManager] createFileAtPath:Path contents:nil attributes:@{NSFileType:model.type}];
     }
     self.outputStream = [NSOutputStream outputStreamToFileAtPath:Path append:YES];
-    [self.outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    self.outputStream.delegate = self;
     [model addObserver:self forKeyPath:@"currentLength" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
     [model addObserver:self forKeyPath:@"totalLength" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
 }
@@ -48,18 +48,6 @@
     self.task = [[HttpDownloadTool defaulSession] dataTaskWithRequest:self.request];
     [self.task resume];
 }
-
-
-//- (void)continueDownload {
-//    self.task = [self.session dataTaskWithURL:[self request] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//
-//    }];
-//    [self.task resume];
-//}
-//
-//- (void)suspend {
-//    [self.task suspend];
-//}
 
 
 - (void)cancel {
@@ -93,6 +81,10 @@
             self.downloadProgress(self.model.currentLength * 1.0 / totalLength);
         }
     }
+}
+
+- (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode {
+    NSLog(@"%lu",(unsigned long)eventCode);
 }
 
 @end
