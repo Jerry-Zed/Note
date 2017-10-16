@@ -10,11 +10,13 @@
 		220453E11F74E9F600E55697 /* HttpRequestTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 220453E01F74E9F600E55697 /* HttpRequestTool.m */; };
 		220453E41F74F6F200E55697 /* HTTPCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 220453E31F74F6F200E55697 /* HTTPCredential.m */; };
 		226240F71F7CD405000D5BDC /* NTDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 226240F61F7CD405000D5BDC /* NTDownloadTask.m */; };
+		22BEA4E41F949E25009EA712 /* NTDownloadStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22BEA4E21F949E25009EA712 /* NTDownloadStatusCell.m */; };
+		22BEA4E51F949E25009EA712 /* NTDownloadStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22BEA4E31F949E25009EA712 /* NTDownloadStatusCell.xib */; };
 		22F364091F7E4A7E00B9C3C9 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F364081F7E4A7E00B9C3C9 /* NSString+MD5.m */; };
 		22F3640C1F7E4FDB00B9C3C9 /* NTDownloadFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F3640B1F7E4FDB00B9C3C9 /* NTDownloadFileModel.m */; };
 		87528CE9660D505B1C5227A9 /* libPods-Note.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B365AA51E02B7C6A24C943 /* libPods-Note.a */; };
 		95ABE82A1F77B3AA00CEF643 /* HttpUploadTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 95ABE8291F77B3AA00CEF643 /* HttpUploadTool.m */; };
-		95ABE82D1F77B77200CEF643 /* HttpDownloadTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 95ABE82C1F77B77200CEF643 /* HttpDownloadTool.m */; };
+		95ABE82D1F77B77200CEF643 /* HttpDownloadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 95ABE82C1F77B77200CEF643 /* HttpDownloadSession.m */; };
 		95EA65431F729CAA00212D97 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA65421F729CAA00212D97 /* AppDelegate.m */; };
 		95EA65461F729CAA00212D97 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA65451F729CAA00212D97 /* ViewController.m */; };
 		95EA654B1F729CAA00212D97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95EA654A1F729CAA00212D97 /* Assets.xcassets */; };
@@ -22,8 +24,6 @@
 		95EA655B1F729CAA00212D97 /* NoteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA655A1F729CAA00212D97 /* NoteTests.m */; };
 		95EA656F1F72A01600212D97 /* commonDefine.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA656E1F72A01600212D97 /* commonDefine.m */; };
 		95EA65721F72A03500212D97 /* BaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA65711F72A03500212D97 /* BaseController.m */; };
-		95EA65761F72A08B00212D97 /* NtHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA65751F72A08B00212D97 /* NtHomeViewController.m */; };
-		95EA65791F72AAE000212D97 /* NTSideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA65781F72AAE000212D97 /* NTSideBarViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,14 +43,19 @@
 		220453E31F74F6F200E55697 /* HTTPCredential.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPCredential.m; sourceTree = "<group>"; };
 		226240F51F7CD405000D5BDC /* NTDownloadTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTDownloadTask.h; sourceTree = "<group>"; };
 		226240F61F7CD405000D5BDC /* NTDownloadTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTDownloadTask.m; sourceTree = "<group>"; };
+		22BEA4E11F949E25009EA712 /* NTDownloadStatusCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTDownloadStatusCell.h; sourceTree = "<group>"; };
+		22BEA4E21F949E25009EA712 /* NTDownloadStatusCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTDownloadStatusCell.m; sourceTree = "<group>"; };
+		22BEA4E31F949E25009EA712 /* NTDownloadStatusCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NTDownloadStatusCell.xib; sourceTree = "<group>"; };
+		22BEA4E71F94A290009EA712 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		22BEA4E81F94ACC1009EA712 /* NTDownloadConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTDownloadConfig.h; sourceTree = "<group>"; };
 		22F364071F7E4A7E00B9C3C9 /* NSString+MD5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		22F364081F7E4A7E00B9C3C9 /* NSString+MD5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		22F3640A1F7E4FDB00B9C3C9 /* NTDownloadFileModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTDownloadFileModel.h; sourceTree = "<group>"; };
 		22F3640B1F7E4FDB00B9C3C9 /* NTDownloadFileModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTDownloadFileModel.m; sourceTree = "<group>"; };
 		95ABE8281F77B3AA00CEF643 /* HttpUploadTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpUploadTool.h; sourceTree = "<group>"; };
 		95ABE8291F77B3AA00CEF643 /* HttpUploadTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HttpUploadTool.m; sourceTree = "<group>"; };
-		95ABE82B1F77B77200CEF643 /* HttpDownloadTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpDownloadTool.h; sourceTree = "<group>"; };
-		95ABE82C1F77B77200CEF643 /* HttpDownloadTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HttpDownloadTool.m; sourceTree = "<group>"; };
+		95ABE82B1F77B77200CEF643 /* HttpDownloadSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpDownloadSession.h; sourceTree = "<group>"; };
+		95ABE82C1F77B77200CEF643 /* HttpDownloadSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HttpDownloadSession.m; sourceTree = "<group>"; };
 		95EA653E1F729CAA00212D97 /* Note.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Note.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95EA65411F729CAA00212D97 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		95EA65421F729CAA00212D97 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -66,10 +71,6 @@
 		95EA656E1F72A01600212D97 /* commonDefine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = commonDefine.m; sourceTree = "<group>"; };
 		95EA65701F72A03500212D97 /* BaseController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseController.h; sourceTree = "<group>"; };
 		95EA65711F72A03500212D97 /* BaseController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseController.m; sourceTree = "<group>"; };
-		95EA65741F72A08B00212D97 /* NtHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NtHomeViewController.h; sourceTree = "<group>"; };
-		95EA65751F72A08B00212D97 /* NtHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NtHomeViewController.m; sourceTree = "<group>"; };
-		95EA65771F72AAE000212D97 /* NTSideBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTSideBarViewController.h; sourceTree = "<group>"; };
-		95EA65781F72AAE000212D97 /* NTSideBarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTSideBarViewController.m; sourceTree = "<group>"; };
 		A119E7F92113FD02F7FF108E /* Pods-Note.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Note.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Note/Pods-Note.debug.xcconfig"; sourceTree = "<group>"; };
 		B3B365AA51E02B7C6A24C943 /* libPods-Note.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Note.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F47A9965682F0262B309AC04 /* Pods-Note.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Note.release.xcconfig"; path = "Pods/Target Support Files/Pods-Note/Pods-Note.release.xcconfig"; sourceTree = "<group>"; };
@@ -113,12 +114,13 @@
 				220453E31F74F6F200E55697 /* HTTPCredential.m */,
 				95ABE8281F77B3AA00CEF643 /* HttpUploadTool.h */,
 				95ABE8291F77B3AA00CEF643 /* HttpUploadTool.m */,
-				95ABE82B1F77B77200CEF643 /* HttpDownloadTool.h */,
-				95ABE82C1F77B77200CEF643 /* HttpDownloadTool.m */,
+				95ABE82B1F77B77200CEF643 /* HttpDownloadSession.h */,
+				95ABE82C1F77B77200CEF643 /* HttpDownloadSession.m */,
 				226240F51F7CD405000D5BDC /* NTDownloadTask.h */,
 				226240F61F7CD405000D5BDC /* NTDownloadTask.m */,
 				22F3640A1F7E4FDB00B9C3C9 /* NTDownloadFileModel.h */,
 				22F3640B1F7E4FDB00B9C3C9 /* NTDownloadFileModel.m */,
+				22BEA4E81F94ACC1009EA712 /* NTDownloadConfig.h */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -173,6 +175,7 @@
 				95EA654A1F729CAA00212D97 /* Assets.xcassets */,
 				95EA654F1F729CAA00212D97 /* Info.plist */,
 				95EA65501F729CAA00212D97 /* main.m */,
+				22BEA4E71F94A290009EA712 /* PrefixHeader.pch */,
 			);
 			path = Note;
 			sourceTree = "<group>";
@@ -216,10 +219,9 @@
 		95EA65731F72A06300212D97 /* home */ = {
 			isa = PBXGroup;
 			children = (
-				95EA65741F72A08B00212D97 /* NtHomeViewController.h */,
-				95EA65751F72A08B00212D97 /* NtHomeViewController.m */,
-				95EA65771F72AAE000212D97 /* NTSideBarViewController.h */,
-				95EA65781F72AAE000212D97 /* NTSideBarViewController.m */,
+				22BEA4E11F949E25009EA712 /* NTDownloadStatusCell.h */,
+				22BEA4E21F949E25009EA712 /* NTDownloadStatusCell.m */,
+				22BEA4E31F949E25009EA712 /* NTDownloadStatusCell.xib */,
 			);
 			path = home;
 			sourceTree = "<group>";
@@ -310,6 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95EA654B1F729CAA00212D97 /* Assets.xcassets in Resources */,
+				22BEA4E51F949E25009EA712 /* NTDownloadStatusCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,18 +379,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				95EA65461F729CAA00212D97 /* ViewController.m in Sources */,
-				95EA65791F72AAE000212D97 /* NTSideBarViewController.m in Sources */,
 				95EA65721F72A03500212D97 /* BaseController.m in Sources */,
 				22F3640C1F7E4FDB00B9C3C9 /* NTDownloadFileModel.m in Sources */,
-				95ABE82D1F77B77200CEF643 /* HttpDownloadTool.m in Sources */,
+				95ABE82D1F77B77200CEF643 /* HttpDownloadSession.m in Sources */,
 				95EA656F1F72A01600212D97 /* commonDefine.m in Sources */,
-				95EA65761F72A08B00212D97 /* NtHomeViewController.m in Sources */,
 				22F364091F7E4A7E00B9C3C9 /* NSString+MD5.m in Sources */,
 				220453E41F74F6F200E55697 /* HTTPCredential.m in Sources */,
 				95EA65511F729CAA00212D97 /* main.m in Sources */,
 				95EA65431F729CAA00212D97 /* AppDelegate.m in Sources */,
 				226240F71F7CD405000D5BDC /* NTDownloadTask.m in Sources */,
 				95ABE82A1F77B3AA00CEF643 /* HttpUploadTool.m in Sources */,
+				22BEA4E41F949E25009EA712 /* NTDownloadStatusCell.m in Sources */,
 				220453E11F74E9F600E55697 /* HttpRequestTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -449,6 +451,8 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Note/PrefixHeader.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -502,6 +506,8 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Note/PrefixHeader.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

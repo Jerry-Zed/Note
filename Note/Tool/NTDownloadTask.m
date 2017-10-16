@@ -7,56 +7,86 @@
 //
 
 #import "NTDownloadTask.h"
-#import "HttpDownloadTool.h"
+#import "HttpDownloadSession.h"
 #import "NSString+MD5.h"
 
-#define Path [DownloadDir stringByAppendingPathComponent:self.model.path]
+
 @interface NTDownloadTask () <NSStreamDelegate>
 @property (nonatomic, strong) NSURLSessionDataTask *task;
 @property (nonatomic, copy) NSString *url;
-//@property (nonatomic, retain) NSURLSession *session;
+@property (nonatomic, strong) NSLock* lock;
 @end
 @implementation NTDownloadTask
 
+- (void)dealloc {
+    [_model stopWrite];
+    [_task cancel];
+    _task = nil;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.lock = [[NSLock alloc]init];
+    }
+    return self;
+}
+
+- (instancetype)initWithUrl:(NSString*)url
+{
+    self = [super init];
+    if (self) {
+        NTDownloadFileModel *model = [NTDownloadFileModel instanceWith:[NSURL URLWithString:url]];
+        self.lock = [[NSLock alloc]init];
+        self.url = url;
+        self.model = model;
+        self.task = [[HttpDownloadSession defaulSession] dataTaskWithRequest:self.request];
+        [self setValue:@(self.task.taskIdentifier) forKey:@"taskIdentifier"];
+    }
+    return self;
+}
+
+- (instancetype)initWithModel:(NTDownloadFileModel*)model
+{
+    self = [super init];
+    if (self) {
+        self.lock = [[NSLock alloc]init];
+        self.model = model;
+        self.url = model.url;
+        self.task = [[HttpDownloadSession defaulSession] dataTaskWithRequest:self.request];
+        [self setValue:@(self.task.taskIdentifier) forKey:@"taskIdentifier"];
+    }
+    return self;
+}
 
 - (void)setModel:(NTDownloadFileModel *)model {
     _model = model;
-    if (![[NSFileManager defaultManager] fileExistsAtPath:Path]) {
-        [[NSFileManager defaultManager] createFileAtPath:Path contents:nil attributes:@{NSFileType:model.type}];
-    }
-    self.outputStream = [NSOutputStream outputStreamToFileAtPath:Path append:YES];
-    self.outputStream.delegate = self;
     [model addObserver:self forKeyPath:@"currentLength" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
     [model addObserver:self forKeyPath:@"totalLength" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
 }
 
-- (void)startWithUrl:(NSString*)url {
-    self.url = url;
-    [self cancel];
-    NTDownloadFileModel *model = [NTDownloadFileModel instanceWith:[NSURL URLWithString:url]];
-    self.model = model;
-    self.task = [[HttpDownloadTool defaulSession] dataTaskWithRequest:self.request];
+- (void)start{
+    if (self.task == nil) {
+        self.task = [[HttpDownloadSession defaulSession] dataTaskWithRequest:self.request];
+    }
     [self.task resume];
-    [self setValue:@(self.task.taskIdentifier) forKey:@"taskIdentifier"];
+    [self setValue:@(1) forKey:@"status"];
 }
 
-- (void)suspend {
-    [self.task suspend];
-}
+//- (void)suspend {
+//    [self.task suspend];
+//    [self setValue:@(2) forKey:@"status"];
+//}
 
-- (void)continueDownload {
-    self.task = [[HttpDownloadTool defaulSession] dataTaskWithRequest:self.request];
-    [self.task resume];
-}
 
 
 - (void)cancel {
-    [self.outputStream close];
-    self.outputStream = nil;
+    [self setValue:@(0) forKey:@"status"];
+    [self.model stopWrite];
     [self.task cancel];
     self.task = nil;
 }
-
 
 
 - (NSMutableURLRequest*)request {
@@ -76,7 +106,6 @@
     }
     if ([keyPath isEqualToString:@"totalLength"]) {
         NSInteger totalLength = [change[NSKeyValueChangeNewKey] integerValue];
-//        BOOL sucess = [[NSFileManager defaultManager]setAttributes:@{NSFileSize:@(totalLength)} ofItemAtPath:Path error:nil];
         if (totalLength && self.downloadProgress) {
             self.downloadProgress(self.model.currentLength * 1.0 / totalLength);
         }
@@ -84,7 +113,7 @@
 }
 
 - (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode {
-    NSLog(@"%lu",(unsigned long)eventCode);
+//    NSLog(@"%lu",(unsigned long)eventCode);
 }
 
 @end

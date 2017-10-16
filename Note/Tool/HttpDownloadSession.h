@@ -8,10 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "NTDownloadTask.h"
-@interface HttpDownloadTool : NSObject
-//+ (void)removeAll;
-//+ (void)resumeAll;
-//+ (void)suspendAll;
+@interface HttpDownloadSession : NSObject
 + (NSURLSession*)defaulSession;
-+ (NTDownloadTask*)download:(NSString*)urlString;
+
 @end

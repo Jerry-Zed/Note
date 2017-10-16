@@ -6,27 +6,28 @@
 //  Copyright © 2017年 HS. All rights reserved.
 //
 
-#import "HttpDownloadTool.h"
+#import "HttpDownloadSession.h"
 #import "NTDownloadFileModel.h"
 
 
 
-@interface HttpDownloadTool () <NSURLSessionDelegate,NSURLSessionDataDelegate,NSURLSessionTaskDelegate>
+@interface HttpDownloadSession () <NSURLSessionDelegate,NSURLSessionDataDelegate,NSURLSessionTaskDelegate>
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSMutableArray<NTDownloadTask*> *taskModelList;
-
+@property (nonatomic, strong) dispatch_queue_t queue;
 @end
 
-@implementation HttpDownloadTool
+@implementation HttpDownloadSession
 
-+ (HttpDownloadTool*)manager {
++ (HttpDownloadSession*)manager {
     static dispatch_once_t onceToken;
-    static HttpDownloadTool *manager = nil;
+    static HttpDownloadSession *manager = nil;
     dispatch_once(&onceToken, ^{
-        manager = [HttpDownloadTool new];
+        manager = [HttpDownloadSession new];
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         manager.session = [NSURLSession sessionWithConfiguration:config delegate:manager delegateQueue:[[NSOperationQueue alloc] init]];
         manager.taskModelList = [NSMutableArray arrayWithCapacity:0];
+        manager.queue = dispatch_queue_create("download.queue", DISPATCH_QUEUE_SERIAL);
     });
     return manager;
 }
@@ -36,10 +37,8 @@
 }
 
 + (NTDownloadTask*)download:(NSString*)urlString{
-    NTDownloadTask *task = [NTDownloadTask new];
-    
-    [task startWithUrl:urlString];
-    
+    NTDownloadTask *task = [[NTDownloadTask alloc]initWithUrl:urlString];
+    [task start];
     [[self manager].taskModelList addObject:task];
     return task;
 }
@@ -53,24 +52,32 @@
 //        [tTask cancel];
         [tTask.model save];
     }
+    if (error) {
+        NSLog(@"%@",error.domain);
+    }
 }
 // sessionDataDelegate
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    NTDownloadTask *task = [self seekTaskModel:dataTask];
+    __block NTDownloadTask *task = [self seekTaskModel:dataTask];
+    __block typeof(data) tData = data;
     if (task) {
+        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            if (task.outputStream.streamStatus == NSStreamStatusNotOpen) {
-                [task.outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-                [task.outputStream open];
+            NSInteger downloadLength = [task.model writeData:tData];
+            if (downloadLength > 0) {
+                task.model.currentLength += downloadLength;
+            } else {
+                NSLog(@"出错了");
             }
-//            NSLog(@"%ld",[task.outputStream write:data.bytes maxLength:data.length]);
-            task.model.currentLength += [task.outputStream write:data.bytes maxLength:data.length];
         });
+    } else {
+        NSLog(@"没找到");
     }
 }
 // sessionDataDelegate
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
     NTDownloadTask *task = [self seekTaskModel:dataTask];
+    
     if (task) {
         task.model.totalLength = task.model.currentLength + response.expectedContentLength;
     }

@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#define DownloadDir [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:@"download"]
-#define DownloadList [DownloadDir stringByAppendingPathComponent:@"index.plist"]
+#import "NTDownloadConfig.h"
 
 @interface NTDownloadFileModel : NSObject <NSCoding>
 @property (nonatomic, copy) NSString *path;
+@property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) NSInteger currentLength;
 @property (nonatomic, assign) NSInteger totalLength;
 @property (nonatomic, copy) NSString *type;
@@ -19,7 +19,9 @@
 
 + (instancetype)instanceWith:(NSURL*)url;
 
-- (void)save;                // 保存信息到下载列表
-+ (NSMutableArray*)readList;       // 下载列表
+- (void)save;                               // 保存信息到下载列表
+- (NSInteger)writeData:(NSData*)data;       // 写入数据
+- (void)stopWrite;                          // 停止写入
++ (NSMutableArray*)readList;                // 下载列表
 
 @end

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #define SCREEN_WIDTH            [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT           [UIScreen mainScreen].bounds.size.height
+#define WEAKSELF                typeof(self) tself = self
 @interface commonDefine : NSObject
 
 @end

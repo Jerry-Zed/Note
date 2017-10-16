@@ -11,12 +11,15 @@
 
 @interface NTDownloadTask : NSObject;
 
-@property (nonatomic, strong) NSOutputStream *outputStream;
+@property (readonly) NSInteger status;   // 0 未开始  1 正在下载
 @property (nonatomic, strong) NTDownloadFileModel *model;
 @property (readonly) NSUInteger    taskIdentifier;
-
 @property (nonatomic, copy) void(^downloadProgress)(float progress);
 
+- (instancetype)initWithUrl:(NSString*)url;
+- (instancetype)initWithModel:(NTDownloadFileModel*)model;
+
+- (void)start;
 - (void)cancel;
-- (void)startWithUrl:(NSString*)url;
+
 @end

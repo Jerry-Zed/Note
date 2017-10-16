@@ -9,7 +9,20 @@
 #import "NTDownloadFileModel.h"
 #import <objc/runtime.h>
 
+#define Path [DownloadDir stringByAppendingPathComponent:self.path]
+
+@interface NTDownloadFileModel ()
+@property (nonatomic, strong) NSOutputStream *outputStream;
+@property (nonatomic, strong) NSLock *lock;
+@end
+
 @implementation NTDownloadFileModel
+
+- (void)dealloc {
+    [_outputStream close];
+    _outputStream = nil;
+}
+
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
     self = [super init];
@@ -22,6 +35,7 @@
             id value = [coder decodeObjectForKey:name];
             [self setValue:value forKey:name];
         }
+        self.lock = [[NSLock alloc]init];
     }
     return self;
 }
@@ -50,23 +64,46 @@
     model.path = [url pathComponents].lastObject;
     model.type = [url pathExtension];
     [model setupCurrentLength];
+    [model createDownloadDir];
     return model;
 }
 
+#pragma mark -- getter
+
+- (NSOutputStream*)outputStream {
+    if (_outputStream) {
+        return _outputStream;
+    }
+    if (![[NSFileManager defaultManager] fileExistsAtPath:Path]) {
+        [[NSFileManager defaultManager] createFileAtPath:Path contents:nil attributes:@{NSFileType:self.type}];
+    }
+    _outputStream = [NSOutputStream outputStreamToFileAtPath:Path append:YES];
+//    _outputStream.delegate = self;
+    return _outputStream;
+}
+
+#pragma mark -- private methods
+
+- (void)createDownloadDir {
+    if (![[NSFileManager defaultManager]fileExistsAtPath:DownloadDir isDirectory:nil]) {
+        [[NSFileManager defaultManager]createDirectoryAtPath:DownloadDir withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+}
+
 - (void)setupCurrentLength {
-    NSString *path = [DownloadDir stringByAppendingPathComponent:self.path];
-    BOOL isExist = [[NSFileManager defaultManager] fileExistsAtPath:path];
+    BOOL isExist = [[NSFileManager defaultManager] fileExistsAtPath:Path];
     if (isExist) {
-        NSInteger fileSize = [[[[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil] objectForKey:NSFileSize] integerValue];
+        NSInteger fileSize = [[[[NSFileManager defaultManager] attributesOfItemAtPath:Path error:nil] objectForKey:NSFileSize] integerValue];
         self.currentLength = fileSize;
     } else {
         self.currentLength = 0;
     }
 }
 
+#pragma mark --- public methods
+
 - (void)save {
-    
-    if (![NTDownloadFileModel downloadListExit]) {
+    if (![[NSFileManager defaultManager]fileExistsAtPath:DownloadList]) {
         NSArray *downloadList = @[self];
         [NSKeyedArchiver archiveRootObject:downloadList toFile:DownloadList];
         return;
@@ -85,23 +122,43 @@
     [NSKeyedArchiver archiveRootObject:downloadList toFile:DownloadList];
 }
 
-+ (BOOL)downloadListExit {
-    if (![[NSFileManager defaultManager]fileExistsAtPath:DownloadDir isDirectory:nil]) {
-        [[NSFileManager defaultManager]createDirectoryAtPath:DownloadDir withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    if (![[NSFileManager defaultManager]fileExistsAtPath:DownloadList]) {
-        return NO;
-    }
-    return YES;
-}
+//+ (BOOL)downloadListExit {
+//    if (![[NSFileManager defaultManager]fileExistsAtPath:DownloadDir isDirectory:nil]) {
+//        [[NSFileManager defaultManager]createDirectoryAtPath:DownloadDir withIntermediateDirectories:YES attributes:nil error:nil];
+//    }
+//    if (![[NSFileManager defaultManager]fileExistsAtPath:DownloadList]) {
+//        return NO;
+//    }
+//    return YES;
+//}
 
 + (NSMutableArray*)readList {
-    if (![self downloadListExit]) {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:DownloadList]) {
         return nil;
     }
-    
     NSArray *downloadList = [NSKeyedUnarchiver unarchiveObjectWithFile:DownloadList];
     return [downloadList mutableCopy];
 }
+
+- (NSInteger)writeData:(NSData*)data {
+    
+    if (self.outputStream.streamStatus == NSStreamStatusNotOpen) {
+        [self.outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        [self.outputStream open];
+        //        [[NSRunLoop currentRunLoop] run];
+    }
+    [self.lock lock];
+    NSLog(@"呵呵哒");
+    
+    NSInteger writeLength = [self.outputStream write:data.bytes maxLength:data.length];
+    [self.lock unlock];
+    return writeLength;
+}
+
+- (void)stopWrite {
+    [self.outputStream close];
+    self.outputStream = nil;
+}
+
 
 @end
