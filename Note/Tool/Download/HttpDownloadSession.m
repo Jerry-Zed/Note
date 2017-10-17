@@ -66,7 +66,7 @@
     __block typeof(data) tData = data;
     if (task) {
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async(self.queue, ^{
             NSInteger downloadLength = [task.model writeData:tData];
             if (downloadLength >= 0) {
                 task.model.currentLength += downloadLength;
