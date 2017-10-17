@@ -36,12 +36,16 @@
     return [self manager].session;
 }
 
-+ (NTDownloadTask*)download:(NSString*)urlString{
-    NTDownloadTask *task = [[NTDownloadTask alloc]initWithUrl:urlString];
-    [task start];
-    [[self manager].taskModelList addObject:task];
-    return task;
++ (NSMutableArray<NTDownloadTask*>*)taskList {
+    return [self manager].taskModelList;
 }
+
+//+ (NTDownloadTask*)download:(NSString*)urlString{
+//    NTDownloadTask *task = [[NTDownloadTask alloc]initWithUrl:urlString];
+//    [task start];
+//    [[self manager].taskModelList addObject:task];
+//    return task;
+//}
 
 #pragma mark -- Delegate
 
@@ -49,7 +53,7 @@
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     NTDownloadTask *tTask= [self seekTaskModel:task];
     if (tTask) {
-//        [tTask cancel];
+        [tTask cancel];
         [tTask.model save];
     }
     if (error) {

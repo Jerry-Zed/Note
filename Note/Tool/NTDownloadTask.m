@@ -72,6 +72,7 @@
     }
     [self.task resume];
     [self setValue:@(1) forKey:@"status"];
+    [[HttpDownloadSession taskList] addObject:self];
 }
 
 //- (void)suspend {
@@ -101,13 +102,17 @@
     if ([keyPath isEqualToString:@"currentLength"]) {
         NSInteger downloadLength = [change[NSKeyValueChangeNewKey] integerValue];
         if (self.model.totalLength && self.downloadProgress) {
-            self.downloadProgress(downloadLength * 1.0 / self.model.totalLength);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.downloadProgress(downloadLength * 1.0 / self.model.totalLength);
+            });
         }
     }
     if ([keyPath isEqualToString:@"totalLength"]) {
         NSInteger totalLength = [change[NSKeyValueChangeNewKey] integerValue];
         if (totalLength && self.downloadProgress) {
-            self.downloadProgress(self.model.currentLength * 1.0 / totalLength);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.downloadProgress(self.model.currentLength * 1.0 / totalLength);
+            });
         }
     }
 }

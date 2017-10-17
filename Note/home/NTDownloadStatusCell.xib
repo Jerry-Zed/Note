@@ -50,6 +50,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="actionButton" destination="sOn-IO-Lhi" id="56M-OE-v4M"/>
                 <outlet property="nameLabel" destination="73H-Me-tN3" id="8RC-CS-H58"/>
                 <outlet property="progressView" destination="XPn-zn-YZ8" id="q6K-af-vdz"/>
             </connections>

@@ -36,6 +36,7 @@
             [self setValue:value forKey:name];
         }
         self.lock = [[NSLock alloc]init];
+        [self setupCurrentLength];
     }
     return self;
 }
@@ -46,6 +47,9 @@
     for (int i = 0; i < count; i ++) {
         Ivar var = varList[i];
         NSString *key = [NSString stringWithUTF8String:ivar_getName(var)];
+        if ([key isEqualToString:@"_lock"] || [key isEqualToString:@"_outputStream"]) {
+            continue;
+        }
         id value = [self valueForKey:key];
         [aCoder encodeObject:value forKey:key];
     }
@@ -63,6 +67,7 @@
     model.url = url.absoluteString;
     model.path = [url pathComponents].lastObject;
     model.type = [url pathExtension];
+    model.lock = [[NSLock alloc]init];
     [model setupCurrentLength];
     [model createDownloadDir];
     return model;
@@ -148,7 +153,7 @@
         //        [[NSRunLoop currentRunLoop] run];
     }
     [self.lock lock];
-    NSLog(@"呵呵哒");
+//    NSLog(@"呵呵哒");
     
     NSInteger writeLength = [self.outputStream write:data.bytes maxLength:data.length];
     [self.lock unlock];
