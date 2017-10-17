@@ -127,6 +127,22 @@
     [NSKeyedArchiver archiveRootObject:downloadList toFile:DownloadList];
 }
 
+- (void)del {
+    BOOL success = [[NSFileManager defaultManager]removeItemAtPath:Path error:nil];
+    if ([[NSFileManager defaultManager]fileExistsAtPath:DownloadList]) {
+        NSMutableArray *downloadList = [[NSKeyedUnarchiver unarchiveObjectWithFile:DownloadList] mutableCopy];
+        NTDownloadFileModel *target = nil;
+        for (NTDownloadFileModel *model in downloadList) {
+            if ([model.url isEqualToString:self.url]) {
+                target = model;
+            }
+        }
+        if (target) {
+            [downloadList removeObject:target];
+        }
+    }
+}
+
 //+ (BOOL)downloadListExit {
 //    if (![[NSFileManager defaultManager]fileExistsAtPath:DownloadDir isDirectory:nil]) {
 //        [[NSFileManager defaultManager]createDirectoryAtPath:DownloadDir withIntermediateDirectories:YES attributes:nil error:nil];

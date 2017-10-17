@@ -20,6 +20,7 @@
 + (instancetype)instanceWith:(NSURL*)url;
 
 - (void)save;                               // 保存信息到下载列表
+- (void)del;
 - (NSInteger)writeData:(NSData*)data;       // 写入数据
 - (void)stopWrite;                          // 停止写入
 + (NSMutableArray*)readList;                // 下载列表

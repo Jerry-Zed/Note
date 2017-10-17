@@ -68,7 +68,7 @@
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSInteger downloadLength = [task.model writeData:tData];
-            if (downloadLength > 0) {
+            if (downloadLength >= 0) {
                 task.model.currentLength += downloadLength;
             } else {
                 NSLog(@"出错了");
