@@ -9,12 +9,18 @@
 #import "HttpDownloadSession.h"
 #import "NTDownloadFileModel.h"
 
-
+static dispatch_queue_t serial_queue () {
+    static dispatch_once_t onceToken;
+    static dispatch_queue_t queue;
+    dispatch_once(&onceToken, ^{
+      queue = dispatch_queue_create("download.queue", DISPATCH_QUEUE_SERIAL);
+    });
+    return queue;
+}
 
 @interface HttpDownloadSession () <NSURLSessionDelegate,NSURLSessionDataDelegate,NSURLSessionTaskDelegate>
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSMutableArray<NTDownloadTask*> *taskModelList;
-@property (nonatomic, strong) dispatch_queue_t queue;
 @end
 
 @implementation HttpDownloadSession
@@ -27,7 +33,6 @@
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         manager.session = [NSURLSession sessionWithConfiguration:config delegate:manager delegateQueue:[[NSOperationQueue alloc] init]];
         manager.taskModelList = [NSMutableArray arrayWithCapacity:0];
-        manager.queue = dispatch_queue_create("download.queue", DISPATCH_QUEUE_SERIAL);
     });
     return manager;
 }
@@ -55,6 +60,7 @@
     if (tTask) {
         [tTask cancel];
         [tTask.model save];
+        NSLog(@"完成");
     }
     if (error) {
         NSLog(@"%@",error.domain);
@@ -66,10 +72,10 @@
     __block typeof(data) tData = data;
     if (task) {
         
-        dispatch_async(self.queue, ^{
+        dispatch_async(serial_queue(), ^{
             NSInteger downloadLength = [task.model writeData:tData];
             if (downloadLength >= 0) {
-                task.model.currentLength += downloadLength;
+//                task.model.currentLength += downloadLength;
             } else {
                 NSLog(@"出错了");
             }

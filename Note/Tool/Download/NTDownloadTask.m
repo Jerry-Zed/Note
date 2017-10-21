@@ -106,6 +106,7 @@
                 self.downloadProgress(downloadLength * 1.0 / self.model.totalLength);
             });
         }
+        NSLog(@"文件大小%ld",(long)downloadLength);
     }
     if ([keyPath isEqualToString:@"totalLength"]) {
         NSInteger totalLength = [change[NSKeyValueChangeNewKey] integerValue];

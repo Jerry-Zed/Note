@@ -32,6 +32,9 @@
         for (int i = 0; i < count; i ++) {
             Ivar var = varList[i];
             NSString *name = [NSString stringWithUTF8String:ivar_getName(var)];
+            if ([name isEqualToString:@"_currentLength"]) {
+                continue;
+            }
             id value = [coder decodeObjectForKey:name];
             [self setValue:value forKey:name];
         }
@@ -99,9 +102,10 @@
     BOOL isExist = [[NSFileManager defaultManager] fileExistsAtPath:Path];
     if (isExist) {
         NSInteger fileSize = [[[[NSFileManager defaultManager] attributesOfItemAtPath:Path error:nil] objectForKey:NSFileSize] integerValue];
-        self.currentLength = fileSize;
+//        self.currentLength = fileSize;
+        [self setValue:@(fileSize) forKey:@"currentLength"];
     } else {
-        self.currentLength = 0;
+        [self setValue:@(0) forKey:@"currentLength"];
     }
 }
 
@@ -169,9 +173,9 @@
         //        [[NSRunLoop currentRunLoop] run];
     }
     [self.lock lock];
-//    NSLog(@"呵呵哒");
     
     NSInteger writeLength = [self.outputStream write:data.bytes maxLength:data.length];
+    [self setValue:@(self.currentLength + writeLength) forKey:@"currentLength"];
     [self.lock unlock];
     return writeLength;
 }

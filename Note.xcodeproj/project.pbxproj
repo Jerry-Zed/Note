@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		22BEA4E41F949E25009EA712 /* NTDownloadStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22BEA4E21F949E25009EA712 /* NTDownloadStatusCell.m */; };
-		22BEA4E51F949E25009EA712 /* NTDownloadStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22BEA4E31F949E25009EA712 /* NTDownloadStatusCell.xib */; };
+		2249B45C1F9B30B600126CDA /* NTDownloadController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2249B45B1F9B30B600126CDA /* NTDownloadController.m */; };
+		2249B4601F9B311700126CDA /* NTDownloadStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2249B45D1F9B311600126CDA /* NTDownloadStatusCell.xib */; };
+		2249B4611F9B311700126CDA /* NTDownloadStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2249B45E1F9B311700126CDA /* NTDownloadStatusCell.m */; };
 		22DA9FB01F95E355003722A4 /* HttpDownloadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DA9FA51F95E355003722A4 /* HttpDownloadSession.m */; };
 		22DA9FB11F95E355003722A4 /* NTDownloadFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DA9FA81F95E355003722A4 /* NTDownloadFileModel.m */; };
 		22DA9FB21F95E355003722A4 /* NTDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DA9FAA1F95E355003722A4 /* NTDownloadTask.m */; };
@@ -37,9 +38,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		22BEA4E11F949E25009EA712 /* NTDownloadStatusCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTDownloadStatusCell.h; sourceTree = "<group>"; };
-		22BEA4E21F949E25009EA712 /* NTDownloadStatusCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTDownloadStatusCell.m; sourceTree = "<group>"; };
-		22BEA4E31F949E25009EA712 /* NTDownloadStatusCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NTDownloadStatusCell.xib; sourceTree = "<group>"; };
+		2249B45A1F9B30B600126CDA /* NTDownloadController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTDownloadController.h; sourceTree = "<group>"; };
+		2249B45B1F9B30B600126CDA /* NTDownloadController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTDownloadController.m; sourceTree = "<group>"; };
+		2249B45D1F9B311600126CDA /* NTDownloadStatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NTDownloadStatusCell.xib; sourceTree = "<group>"; };
+		2249B45E1F9B311700126CDA /* NTDownloadStatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTDownloadStatusCell.m; sourceTree = "<group>"; };
+		2249B45F1F9B311700126CDA /* NTDownloadStatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTDownloadStatusCell.h; sourceTree = "<group>"; };
 		22BEA4E71F94A290009EA712 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		22DA9FA41F95E355003722A4 /* HttpDownloadSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpDownloadSession.h; sourceTree = "<group>"; };
 		22DA9FA51F95E355003722A4 /* HttpDownloadSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpDownloadSession.m; sourceTree = "<group>"; };
@@ -116,6 +119,34 @@
 			path = Tool;
 			sourceTree = "<group>";
 		};
+		2249B4571F9B2FE100126CDA /* Business */ = {
+			isa = PBXGroup;
+			children = (
+				2249B4591F9B303800126CDA /* Download */,
+				2249B4581F9B303800126CDA /* Request */,
+			);
+			path = Business;
+			sourceTree = "<group>";
+		};
+		2249B4581F9B303800126CDA /* Request */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		2249B4591F9B303800126CDA /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				2249B45F1F9B311700126CDA /* NTDownloadStatusCell.h */,
+				2249B45E1F9B311700126CDA /* NTDownloadStatusCell.m */,
+				2249B45D1F9B311600126CDA /* NTDownloadStatusCell.xib */,
+				2249B45A1F9B30B600126CDA /* NTDownloadController.h */,
+				2249B45B1F9B30B600126CDA /* NTDownloadController.m */,
+			);
+			path = Download;
+			sourceTree = "<group>";
+		};
 		22DA9FA31F95E355003722A4 /* Download */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +215,7 @@
 				220453DE1F74E90A00E55697 /* Tool */,
 				95EA656A1F72A01600212D97 /* common */,
 				95EA65731F72A06300212D97 /* home */,
+				2249B4571F9B2FE100126CDA /* Business */,
 				95EA65411F729CAA00212D97 /* AppDelegate.h */,
 				95EA65421F729CAA00212D97 /* AppDelegate.m */,
 				95EA65441F729CAA00212D97 /* ViewController.h */,
@@ -235,9 +267,6 @@
 		95EA65731F72A06300212D97 /* home */ = {
 			isa = PBXGroup;
 			children = (
-				22BEA4E11F949E25009EA712 /* NTDownloadStatusCell.h */,
-				22BEA4E21F949E25009EA712 /* NTDownloadStatusCell.m */,
-				22BEA4E31F949E25009EA712 /* NTDownloadStatusCell.xib */,
 			);
 			path = home;
 			sourceTree = "<group>";
@@ -328,7 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95EA654B1F729CAA00212D97 /* Assets.xcassets in Resources */,
-				22BEA4E51F949E25009EA712 /* NTDownloadStatusCell.xib in Resources */,
+				2249B4601F9B311700126CDA /* NTDownloadStatusCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +424,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95EA65461F729CAA00212D97 /* ViewController.m in Sources */,
+				2249B4611F9B311700126CDA /* NTDownloadStatusCell.m in Sources */,
 				95EA65721F72A03500212D97 /* BaseController.m in Sources */,
 				22DA9FB31F95E355003722A4 /* HTTPCredential.m in Sources */,
 				22DA9FB01F95E355003722A4 /* HttpDownloadSession.m in Sources */,
@@ -405,7 +435,7 @@
 				95EA65431F729CAA00212D97 /* AppDelegate.m in Sources */,
 				95ABE82A1F77B3AA00CEF643 /* HttpUploadTool.m in Sources */,
 				22DA9FB41F95E355003722A4 /* HttpRequestTool.m in Sources */,
-				22BEA4E41F949E25009EA712 /* NTDownloadStatusCell.m in Sources */,
+				2249B45C1F9B30B600126CDA /* NTDownloadController.m in Sources */,
 				22DA9FB21F95E355003722A4 /* NTDownloadTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

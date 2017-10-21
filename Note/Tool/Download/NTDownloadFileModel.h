@@ -12,7 +12,7 @@
 @interface NTDownloadFileModel : NSObject <NSCoding>
 @property (nonatomic, copy) NSString *path;
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, assign) NSInteger currentLength;
+@property (readonly) NSInteger currentLength;
 @property (nonatomic, assign) NSInteger totalLength;
 @property (nonatomic, copy) NSString *type;
 @property (nonatomic, copy) NSString *url;
