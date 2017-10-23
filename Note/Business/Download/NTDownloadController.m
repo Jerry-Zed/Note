@@ -11,7 +11,7 @@
 #import "NTDownloadStatusCell.h"
 
 @interface NTDownloadController () <UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) NSMutableArray<NTDownloadTask*> *downLoadTasks;
+@property (nonatomic, strong) NSMutableArray<NTDownloadManager*> *downloadMngs;
 @property (nonatomic, strong) UITableView *tableView;
 @end
 
@@ -41,28 +41,28 @@
     return _tableView;
 }
 
-- (NSMutableArray<NTDownloadTask*>*)downLoadTasks {
-    if (_downLoadTasks) {
-        return _downLoadTasks;
+- (NSMutableArray<NTDownloadManager*>*)downloadMngs {
+    if (_downloadMngs) {
+        return _downloadMngs;
     }
-    _downLoadTasks = [NSMutableArray arrayWithCapacity:0];
+    _downloadMngs = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *downloadList = [NTDownloadFileModel readList];
     for (NTDownloadFileModel *model in downloadList) {
-        NTDownloadTask *task = [[NTDownloadTask alloc]initWithModel:model];
-        [_downLoadTasks addObject:task];
+        NTDownloadManager *task = [[NTDownloadManager alloc]initWithModel:model];
+        [_downloadMngs addObject:task];
     }
-    return _downLoadTasks;
+    return _downloadMngs;
 }
 
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NTDownloadStatusCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    cell.task = self.downLoadTasks[indexPath.row];
+    cell.mng = self.downloadMngs[indexPath.row];
     return cell;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.downLoadTasks.count;
+    return self.downloadMngs.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

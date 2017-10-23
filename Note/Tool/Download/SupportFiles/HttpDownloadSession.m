@@ -8,7 +8,6 @@
 
 #import "HttpDownloadSession.h"
 #import "NTDownloadFileModel.h"
-
 static dispatch_queue_t serial_queue () {
     static dispatch_once_t onceToken;
     static dispatch_queue_t queue;
@@ -20,7 +19,6 @@ static dispatch_queue_t serial_queue () {
 
 @interface HttpDownloadSession () <NSURLSessionDelegate,NSURLSessionDataDelegate,NSURLSessionTaskDelegate>
 @property (nonatomic, strong) NSURLSession *session;
-@property (nonatomic, strong) NSMutableArray<NTDownloadTask*> *taskModelList;
 @end
 
 @implementation HttpDownloadSession
@@ -32,7 +30,6 @@ static dispatch_queue_t serial_queue () {
         manager = [HttpDownloadSession new];
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         manager.session = [NSURLSession sessionWithConfiguration:config delegate:manager delegateQueue:[[NSOperationQueue alloc] init]];
-        manager.taskModelList = [NSMutableArray arrayWithCapacity:0];
     });
     return manager;
 }
@@ -41,22 +38,16 @@ static dispatch_queue_t serial_queue () {
     return [self manager].session;
 }
 
-+ (NSMutableArray<NTDownloadTask*>*)taskList {
-    return [self manager].taskModelList;
-}
 
-//+ (NTDownloadTask*)download:(NSString*)urlString{
-//    NTDownloadTask *task = [[NTDownloadTask alloc]initWithUrl:urlString];
-//    [task start];
-//    [[self manager].taskModelList addObject:task];
-//    return task;
-//}
 
 #pragma mark -- Delegate
 
 // sessionTaskDelegate
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    NTDownloadTask *tTask= [self seekTaskModel:task];
+    NTDownloadDataTask *tTask = nil;
+    if ([task isKindOfClass:[NTDownloadDataTask class]]) {
+        tTask = (NTDownloadDataTask*)task;
+    }
     if (tTask) {
         [tTask cancel];
         [tTask.model save];
@@ -68,12 +59,15 @@ static dispatch_queue_t serial_queue () {
 }
 // sessionDataDelegate
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    __block NTDownloadTask *task = [self seekTaskModel:dataTask];
+    NTDownloadDataTask *tTask = nil;
     __block typeof(data) tData = data;
-    if (task) {
+    if ([dataTask isKindOfClass:[NTDownloadDataTask class]]) {
+        tTask = (NTDownloadDataTask*)dataTask;
+    }
+    if (tTask) {
         
         dispatch_async(serial_queue(), ^{
-            NSInteger downloadLength = [task.model writeData:tData];
+            NSInteger downloadLength = [tTask.model writeData:tData];
             if (downloadLength >= 0) {
 //                task.model.currentLength += downloadLength;
             } else {
@@ -86,22 +80,25 @@ static dispatch_queue_t serial_queue () {
 }
 // sessionDataDelegate
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
-    NTDownloadTask *task = [self seekTaskModel:dataTask];
+    NTDownloadDataTask *task = nil;
+    if ([dataTask isKindOfClass:[NTDownloadDataTask class]]) {
+        task = (NTDownloadDataTask*)dataTask;
+    }
     
     if (task) {
         task.model.totalLength = task.model.currentLength + response.expectedContentLength;
     }
     completionHandler(NSURLSessionResponseAllow);
 }
-
-- (NTDownloadTask*)seekTaskModel:(NSURLSessionTask*)task {
-    for (NTDownloadTask *model in self.taskModelList) {
-        if (task.taskIdentifier == task.taskIdentifier) {
-            return model;
-        }
-    }
-    return nil;
-}
+//
+//- (NTDownloadTask*)seekTaskModel:(NSURLSessionTask*)task {
+//    for (NTDownloadTask *model in self.taskModelList) {
+//        if (task.taskIdentifier == task.taskIdentifier) {
+//            return model;
+//        }
+//    }
+//    return nil;
+//}
 
 
 @end

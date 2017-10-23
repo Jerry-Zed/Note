@@ -23,17 +23,18 @@
     self.progressView.progress = 0;
 }
 
-- (void)setTask:(NTDownloadTask *)task {
-    _task = task;
+- (void)setMng:(NTDownloadManager *)mng {
     WEAKSELF;
-    self.nameLabel.text = task.model.path;
-    if (task.model.totalLength) {
-        [tself setupProgress:task.model.currentLength * 1.0 / task.model.totalLength];
+    _mng = mng;
+    self.nameLabel.text = mng.fileModel.path;
+    if (mng.fileModel.totalLength) {
+        [tself setupProgress:mng.fileModel.currentLength * 1.0 / mng.fileModel.totalLength];
     }
-    self.task.downloadProgress = ^(float progress) {
+    self.mng.downloadProgress = ^(float progress) {
         [tself setupProgress:progress];
     };
 }
+
 
 - (void)setupProgress:(float)progress {
     self.progressView.progress = progress;
@@ -44,13 +45,13 @@
 }
 
 - (IBAction)click:(UIButton*)sender {
-    if (self.task.status == 0) {
+    if (self.mng.status == 0) {
         [sender setTitle:@"暂停" forState:UIControlStateNormal];
-        [self.task start];
+        [self.mng start];
         return;
     }
     [sender setTitle:@"开始" forState:UIControlStateNormal];
-    [self.task cancel];
+    [self.mng cancel];
 }
 
 @end

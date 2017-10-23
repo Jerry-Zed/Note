@@ -10,12 +10,13 @@
 		2249B45C1F9B30B600126CDA /* NTDownloadController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2249B45B1F9B30B600126CDA /* NTDownloadController.m */; };
 		2249B4601F9B311700126CDA /* NTDownloadStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2249B45D1F9B311600126CDA /* NTDownloadStatusCell.xib */; };
 		2249B4611F9B311700126CDA /* NTDownloadStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2249B45E1F9B311700126CDA /* NTDownloadStatusCell.m */; };
-		22DA9FB01F95E355003722A4 /* HttpDownloadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DA9FA51F95E355003722A4 /* HttpDownloadSession.m */; };
-		22DA9FB11F95E355003722A4 /* NTDownloadFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DA9FA81F95E355003722A4 /* NTDownloadFileModel.m */; };
-		22DA9FB21F95E355003722A4 /* NTDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DA9FAA1F95E355003722A4 /* NTDownloadTask.m */; };
 		22DA9FB31F95E355003722A4 /* HTTPCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DA9FAD1F95E355003722A4 /* HTTPCredential.m */; };
 		22DA9FB41F95E355003722A4 /* HttpRequestTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DA9FAF1F95E355003722A4 /* HttpRequestTool.m */; };
 		22F364091F7E4A7E00B9C3C9 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F364081F7E4A7E00B9C3C9 /* NSString+MD5.m */; };
+		22F36E281F9DEDCF0012E4C2 /* NTDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F36E271F9DEDCF0012E4C2 /* NTDownloadManager.m */; };
+		22F36E351F9DF5A60012E4C2 /* NTDownloadFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F36E311F9DF5A40012E4C2 /* NTDownloadFileModel.m */; };
+		22F36E391F9DF5C90012E4C2 /* HttpDownloadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F36E371F9DF5C80012E4C2 /* HttpDownloadSession.m */; };
+		22F36E3C1F9DF91B0012E4C2 /* NSURLSessionDataTask+NTDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F36E3B1F9DF91B0012E4C2 /* NSURLSessionDataTask+NTDownload.m */; };
 		87528CE9660D505B1C5227A9 /* libPods-Note.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B365AA51E02B7C6A24C943 /* libPods-Note.a */; };
 		95ABE82A1F77B3AA00CEF643 /* HttpUploadTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 95ABE8291F77B3AA00CEF643 /* HttpUploadTool.m */; };
 		95EA65431F729CAA00212D97 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA65421F729CAA00212D97 /* AppDelegate.m */; };
@@ -44,19 +45,21 @@
 		2249B45E1F9B311700126CDA /* NTDownloadStatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTDownloadStatusCell.m; sourceTree = "<group>"; };
 		2249B45F1F9B311700126CDA /* NTDownloadStatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTDownloadStatusCell.h; sourceTree = "<group>"; };
 		22BEA4E71F94A290009EA712 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		22DA9FA41F95E355003722A4 /* HttpDownloadSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpDownloadSession.h; sourceTree = "<group>"; };
-		22DA9FA51F95E355003722A4 /* HttpDownloadSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpDownloadSession.m; sourceTree = "<group>"; };
-		22DA9FA61F95E355003722A4 /* NTDownloadConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTDownloadConfig.h; sourceTree = "<group>"; };
-		22DA9FA71F95E355003722A4 /* NTDownloadFileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTDownloadFileModel.h; sourceTree = "<group>"; };
-		22DA9FA81F95E355003722A4 /* NTDownloadFileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTDownloadFileModel.m; sourceTree = "<group>"; };
-		22DA9FA91F95E355003722A4 /* NTDownloadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTDownloadTask.h; sourceTree = "<group>"; };
-		22DA9FAA1F95E355003722A4 /* NTDownloadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTDownloadTask.m; sourceTree = "<group>"; };
 		22DA9FAC1F95E355003722A4 /* HTTPCredential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPCredential.h; sourceTree = "<group>"; };
 		22DA9FAD1F95E355003722A4 /* HTTPCredential.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPCredential.m; sourceTree = "<group>"; };
 		22DA9FAE1F95E355003722A4 /* HttpRequestTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestTool.h; sourceTree = "<group>"; };
 		22DA9FAF1F95E355003722A4 /* HttpRequestTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequestTool.m; sourceTree = "<group>"; };
 		22F364071F7E4A7E00B9C3C9 /* NSString+MD5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		22F364081F7E4A7E00B9C3C9 /* NSString+MD5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		22F36E261F9DEDCF0012E4C2 /* NTDownloadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTDownloadManager.h; sourceTree = "<group>"; };
+		22F36E271F9DEDCF0012E4C2 /* NTDownloadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTDownloadManager.m; sourceTree = "<group>"; };
+		22F36E2C1F9DF36E0012E4C2 /* NTDownloadConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTDownloadConfig.h; sourceTree = "<group>"; };
+		22F36E311F9DF5A40012E4C2 /* NTDownloadFileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTDownloadFileModel.m; sourceTree = "<group>"; };
+		22F36E341F9DF5A50012E4C2 /* NTDownloadFileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTDownloadFileModel.h; sourceTree = "<group>"; };
+		22F36E371F9DF5C80012E4C2 /* HttpDownloadSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpDownloadSession.m; sourceTree = "<group>"; };
+		22F36E381F9DF5C90012E4C2 /* HttpDownloadSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpDownloadSession.h; sourceTree = "<group>"; };
+		22F36E3A1F9DF91B0012E4C2 /* NSURLSessionDataTask+NTDownload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURLSessionDataTask+NTDownload.h"; sourceTree = "<group>"; };
+		22F36E3B1F9DF91B0012E4C2 /* NSURLSessionDataTask+NTDownload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURLSessionDataTask+NTDownload.m"; sourceTree = "<group>"; };
 		95ABE8281F77B3AA00CEF643 /* HttpUploadTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpUploadTool.h; sourceTree = "<group>"; };
 		95ABE8291F77B3AA00CEF643 /* HttpUploadTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HttpUploadTool.m; sourceTree = "<group>"; };
 		95EA653E1F729CAA00212D97 /* Note.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Note.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,13 +153,9 @@
 		22DA9FA31F95E355003722A4 /* Download */ = {
 			isa = PBXGroup;
 			children = (
-				22DA9FA41F95E355003722A4 /* HttpDownloadSession.h */,
-				22DA9FA51F95E355003722A4 /* HttpDownloadSession.m */,
-				22DA9FA61F95E355003722A4 /* NTDownloadConfig.h */,
-				22DA9FA71F95E355003722A4 /* NTDownloadFileModel.h */,
-				22DA9FA81F95E355003722A4 /* NTDownloadFileModel.m */,
-				22DA9FA91F95E355003722A4 /* NTDownloadTask.h */,
-				22DA9FAA1F95E355003722A4 /* NTDownloadTask.m */,
+				22F36E261F9DEDCF0012E4C2 /* NTDownloadManager.h */,
+				22F36E271F9DEDCF0012E4C2 /* NTDownloadManager.m */,
+				22F36E291F9DF36E0012E4C2 /* SupportFiles */,
 			);
 			path = Download;
 			sourceTree = "<group>";
@@ -179,6 +178,20 @@
 				22F364081F7E4A7E00B9C3C9 /* NSString+MD5.m */,
 			);
 			path = category;
+			sourceTree = "<group>";
+		};
+		22F36E291F9DF36E0012E4C2 /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				22F36E381F9DF5C90012E4C2 /* HttpDownloadSession.h */,
+				22F36E371F9DF5C80012E4C2 /* HttpDownloadSession.m */,
+				22F36E341F9DF5A50012E4C2 /* NTDownloadFileModel.h */,
+				22F36E311F9DF5A40012E4C2 /* NTDownloadFileModel.m */,
+				22F36E2C1F9DF36E0012E4C2 /* NTDownloadConfig.h */,
+				22F36E3A1F9DF91B0012E4C2 /* NSURLSessionDataTask+NTDownload.h */,
+				22F36E3B1F9DF91B0012E4C2 /* NSURLSessionDataTask+NTDownload.m */,
+			);
+			path = SupportFiles;
 			sourceTree = "<group>";
 		};
 		8182FC11323D2C7B58876309 /* Frameworks */ = {
@@ -427,16 +440,17 @@
 				2249B4611F9B311700126CDA /* NTDownloadStatusCell.m in Sources */,
 				95EA65721F72A03500212D97 /* BaseController.m in Sources */,
 				22DA9FB31F95E355003722A4 /* HTTPCredential.m in Sources */,
-				22DA9FB01F95E355003722A4 /* HttpDownloadSession.m in Sources */,
-				22DA9FB11F95E355003722A4 /* NTDownloadFileModel.m in Sources */,
+				22F36E281F9DEDCF0012E4C2 /* NTDownloadManager.m in Sources */,
 				95EA656F1F72A01600212D97 /* commonDefine.m in Sources */,
 				22F364091F7E4A7E00B9C3C9 /* NSString+MD5.m in Sources */,
 				95EA65511F729CAA00212D97 /* main.m in Sources */,
+				22F36E351F9DF5A60012E4C2 /* NTDownloadFileModel.m in Sources */,
 				95EA65431F729CAA00212D97 /* AppDelegate.m in Sources */,
+				22F36E391F9DF5C90012E4C2 /* HttpDownloadSession.m in Sources */,
+				22F36E3C1F9DF91B0012E4C2 /* NSURLSessionDataTask+NTDownload.m in Sources */,
 				95ABE82A1F77B3AA00CEF643 /* HttpUploadTool.m in Sources */,
 				22DA9FB41F95E355003722A4 /* HttpRequestTool.m in Sources */,
 				2249B45C1F9B30B600126CDA /* NTDownloadController.m in Sources */,
-				22DA9FB21F95E355003722A4 /* NTDownloadTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

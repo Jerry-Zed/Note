@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NTDownloadTask.h"
 @interface HttpDownloadSession : NSObject
 + (NSURLSession*)defaulSession;
-+ (NSMutableArray<NTDownloadTask*>*)taskList;
 @end

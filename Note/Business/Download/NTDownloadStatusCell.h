@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NTDownloadTask.h"
+#import "NTDownloadManager.h"
 @interface NTDownloadStatusCell : UITableViewCell
-@property (nonatomic, strong) NTDownloadTask *task;
+@property (nonatomic, strong) NTDownloadManager *mng;
 @end
