@@ -8,6 +8,7 @@
 
 #import "HttpDownloadSession.h"
 #import "NTDownloadFileModel.h"
+#import "NSURLSessionDataTask+NTDownload.h"
 static dispatch_queue_t serial_queue () {
     static dispatch_once_t onceToken;
     static dispatch_queue_t queue;
@@ -44,13 +45,9 @@ static dispatch_queue_t serial_queue () {
 
 // sessionTaskDelegate
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    NTDownloadDataTask *tTask = nil;
-    if ([task isKindOfClass:[NTDownloadDataTask class]]) {
-        tTask = (NTDownloadDataTask*)task;
-    }
-    if (tTask) {
-        [tTask cancel];
-        [tTask.model save];
+    if (task.nt_model) {
+        [task cancel];
+        [task.nt_model save];
         NSLog(@"完成");
     }
     if (error) {
@@ -59,19 +56,15 @@ static dispatch_queue_t serial_queue () {
 }
 // sessionDataDelegate
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    NTDownloadDataTask *tTask = nil;
     __block typeof(data) tData = data;
-    if ([dataTask isKindOfClass:[NTDownloadDataTask class]]) {
-        tTask = (NTDownloadDataTask*)dataTask;
-    }
-    if (tTask) {
+    if (dataTask.nt_model) {
         
         dispatch_async(serial_queue(), ^{
-            NSInteger downloadLength = [tTask.model writeData:tData];
+            NSInteger downloadLength = [dataTask.nt_model writeData:tData];
             if (downloadLength >= 0) {
 //                task.model.currentLength += downloadLength;
             } else {
-                NSLog(@"出错了");
+//                NSLog(@"出错了");
             }
         });
     } else {
@@ -80,13 +73,9 @@ static dispatch_queue_t serial_queue () {
 }
 // sessionDataDelegate
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
-    NTDownloadDataTask *task = nil;
-    if ([dataTask isKindOfClass:[NTDownloadDataTask class]]) {
-        task = (NTDownloadDataTask*)dataTask;
-    }
     
-    if (task) {
-        task.model.totalLength = task.model.currentLength + response.expectedContentLength;
+    if (dataTask.nt_model) {
+        dataTask.nt_model.totalLength = dataTask.nt_model.currentLength + response.expectedContentLength;
     }
     completionHandler(NSURLSessionResponseAllow);
 }

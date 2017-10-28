@@ -10,6 +10,7 @@
 #import "NTDownloadFileModel.h"
 #import "NTDownloadStatusCell.h"
 
+
 @interface NTDownloadController () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSMutableArray<NTDownloadManager*> *downloadMngs;
 @property (nonatomic, strong) UITableView *tableView;
@@ -27,7 +28,14 @@
     ////        NSLog(@"%f",progress);
     //    };
     [self.view addSubview:self.tableView];
-    //    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc]initWithTitle:@"" style:<#(UIBarButtonItemStyle)#> target:<#(nullable id)#> action:<#(nullable SEL)#>]];
+    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc]initWithTitle:@"新建任务" style:UIBarButtonItemStylePlain target:self action:@selector(start)]];
+}
+
+- (void)start {
+    NSArray *list = @[@"http://sw.bos.baidu.com/sw-search-sp/software/654897a806dc0/FileZilla_3.17.0.1_macosx-x86.zip",@"",@""];
+    NTDownloadManager *manager = [[NTDownloadManager alloc]initWithUrl:list[0]];
+    [self.downloadMngs addObject:manager];
+    [self.tableView reloadData];
 }
 
 - (UITableView*)tableView {

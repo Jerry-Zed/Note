@@ -8,13 +8,13 @@
 
 #import "NSURLSessionDataTask+NTDownload.h"
 #import <objc/runtime.h>
-@implementation NSURLSessionDataTask (NTDownload)
+@implementation NSObject (NTDownload)
 
-- (void)setModel:(NTDownloadFileModel *)model {
-    objc_setAssociatedObject(self, @selector(model), model, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setNt_model:(NTDownloadFileModel *)nt_model{
+    objc_setAssociatedObject(self, @selector(nt_model), nt_model, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NTDownloadFileModel*)model {
+- (NTDownloadFileModel*)nt_model {
     return objc_getAssociatedObject(self, _cmd);
 }
 

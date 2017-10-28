@@ -9,8 +9,8 @@
 #import "NTDownloadManager.h"
 #import "HttpDownloadSession.h"
 #import "NSURLSessionDataTask+NTDownload.h"
-@interface NTDownloadManager ()
 
+@interface NTDownloadManager ()
 @property (nonatomic, strong) NSURLSessionDataTask *task;
 @end
 @implementation NTDownloadManager
@@ -21,7 +21,7 @@
         NTDownloadFileModel *model = [NTDownloadFileModel instanceWith:[NSURL URLWithString:url]];
         NSMutableURLRequest *request = [NTDownloadManager request:model.url startLength:model.currentLength];
         self.task = [[HttpDownloadSession defaulSession] dataTaskWithRequest:request];
-        [self.task setModel:model];
+        [self.task setNt_model:model];
         [self setValue:model forKey:@"fileModel"];
     }
     return self;
@@ -33,7 +33,7 @@
     if (self) {
         NSMutableURLRequest *request = [NTDownloadManager request:model.url startLength:model.currentLength];
         self.task = [[HttpDownloadSession defaulSession] dataTaskWithRequest:request];
-        [self.task setModel:model];
+        [self.task setNt_model:model];
         [self setValue:model forKey:@"fileModel"];
     }
     return self;
@@ -41,8 +41,9 @@
 
 - (void)start{
     if (self.task == nil) {
-        NSMutableURLRequest *request = [NTDownloadManager request:model.url startLength:self.fileModel.currentLength];
+        NSMutableURLRequest *request = [NTDownloadManager request:self.fileModel.url startLength:self.fileModel.currentLength];
         self.task =  [[HttpDownloadSession defaulSession] dataTaskWithRequest:request];
+        [self.task setNt_model:self.fileModel];
     }
     [self.task resume];
     [self setValue:@(1) forKey:@"status"];
@@ -51,7 +52,7 @@
 
 - (void)cancel {
     [self setValue:@(0) forKey:@"status"];
-    [self.task.model stopWrite];
+    [self.task.nt_model stopWrite];
     [self.task cancel];
     self.task = nil;
 }
@@ -70,7 +71,7 @@
                 self.downloadProgress(downloadLength * 1.0 / self.fileModel.totalLength);
             });
         }
-        NSLog(@"文件大小%ld",(long)downloadLength);
+//        NSLog(@"文件大小%ld",(long)downloadLength);
     }
     if ([keyPath isEqualToString:@"totalLength"]) {
         NSInteger totalLength = [change[NSKeyValueChangeNewKey] integerValue];

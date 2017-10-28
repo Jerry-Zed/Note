@@ -14,6 +14,7 @@
 @interface NTDownloadFileModel ()
 @property (nonatomic, strong) NSOutputStream *outputStream;
 @property (nonatomic, strong) NSLock *lock;
+@property (nonatomic, assign) BOOL isWriting;
 @end
 
 @implementation NTDownloadFileModel
@@ -36,7 +37,9 @@
                 continue;
             }
             id value = [coder decodeObjectForKey:name];
-            [self setValue:value forKey:name];
+            if (value) {
+                [self setValue:value forKey:name];
+            }
         }
         self.lock = [[NSLock alloc]init];
         [self setupCurrentLength];
@@ -171,16 +174,36 @@
         [self.outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         [self.outputStream open];
         //        [[NSRunLoop currentRunLoop] run];
+        NSLog(@"打开流");
     }
     [self.lock lock];
+    NSInteger writeLength = 0;
+    NSInteger location = 0;
+    int size = 1024;
     
-    NSInteger writeLength = [self.outputStream write:data.bytes maxLength:data.length];
-    [self setValue:@(self.currentLength + writeLength) forKey:@"currentLength"];
+    while (location < data.length) {
+        unsigned int len = data.length - location < 1024 ? (int)(data.length - location) : size;
+        uint8_t buf[len];
+        [data getBytes:buf range:NSMakeRange(location, len)];
+        writeLength = [self.outputStream write:buf maxLength:len];
+        if (writeLength < 0) {
+            NSLog(@"写入出错");
+            break;
+        } else {
+            [self setValue:@(self.currentLength + writeLength) forKey:@"currentLength"];
+            location += writeLength;
+        }
+    }
+    
     [self.lock unlock];
     return writeLength;
 }
 
 - (void)stopWrite {
+    if (self.outputStream.streamStatus == NSStreamStatusWriting) {
+        NSLog(@"正在写入");
+    }
+    
     [self.outputStream close];
     self.outputStream = nil;
 }

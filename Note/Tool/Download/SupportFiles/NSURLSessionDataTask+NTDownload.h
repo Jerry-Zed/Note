@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "NTDownloadFileModel.h"
 
-@interface NSURLSessionDataTask (NTDownload)
-@property (nonatomic, strong) NTDownloadFileModel *model;
+@interface NSObject (NTDownload)
+@property (nonatomic, strong) NTDownloadFileModel *nt_model;
 @end
