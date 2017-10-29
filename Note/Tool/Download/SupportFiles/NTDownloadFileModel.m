@@ -169,19 +169,19 @@
 }
 
 - (NSInteger)writeData:(NSData*)data {
-    
     if (self.outputStream.streamStatus == NSStreamStatusNotOpen) {
         [self.outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         [self.outputStream open];
-        //        [[NSRunLoop currentRunLoop] run];
         NSLog(@"打开流");
     }
+    
     [self.lock lock];
     NSInteger writeLength = 0;
     NSInteger location = 0;
     int size = 1024;
     
     while (location < data.length) {
+        
         unsigned int len = data.length - location < 1024 ? (int)(data.length - location) : size;
         uint8_t buf[len];
         [data getBytes:buf range:NSMakeRange(location, len)];
@@ -200,12 +200,12 @@
 }
 
 - (void)stopWrite {
-    if (self.outputStream.streamStatus == NSStreamStatusWriting) {
-        NSLog(@"正在写入");
-    }
-    
-    [self.outputStream close];
-    self.outputStream = nil;
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [self.lock lock];
+        [self.outputStream close];
+        self.outputStream = nil;
+        [self.lock unlock];
+    });
 }
 
 
