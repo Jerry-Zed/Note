@@ -14,7 +14,6 @@
 @interface NTDownloadFileModel ()
 @property (nonatomic, strong) NSOutputStream *outputStream;
 @property (nonatomic, strong) NSLock *lock;
-@property (nonatomic, assign) BOOL isWriting;
 @end
 
 @implementation NTDownloadFileModel
@@ -169,19 +168,19 @@
 }
 
 - (NSInteger)writeData:(NSData*)data {
+    
+    
+    [self.lock lock];
     if (self.outputStream.streamStatus == NSStreamStatusNotOpen) {
         [self.outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         [self.outputStream open];
         NSLog(@"打开流");
     }
-    
-    [self.lock lock];
     NSInteger writeLength = 0;
     NSInteger location = 0;
     int size = 1024;
     
     while (location < data.length) {
-        
         unsigned int len = data.length - location < 1024 ? (int)(data.length - location) : size;
         uint8_t buf[len];
         [data getBytes:buf range:NSMakeRange(location, len)];
